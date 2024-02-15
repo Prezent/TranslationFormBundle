@@ -119,14 +119,14 @@ class TranslationsListener implements EventSubscriberInterface
             $translatableClass = $form->getConfig()->getDataClass();
         } while ((null === $translatableClass) && $form->getConfig()->getInheritData() && (null !== $form = $form->getParent()));
 
-        // Knp
+        // Knp & Prezent
         if (method_exists($translatableClass, 'getTranslationEntityClass')) {
-            return $translatableClass::getTranslationEntityClass();
+            return (new $translatableClass)->getTranslationEntityClass();
         }
 
         // Gedmo
         if (method_exists($translatableClass, 'getTranslationClass')) {
-            return $translatableClass::getTranslationClass();
+            return (new $translatableClass)->getTranslationClass();
         }
 
         return $translatableClass.'Translation';
